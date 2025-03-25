@@ -1,16 +1,32 @@
 const express = require("express");
 const app = express();
 
-// app.use("/", (req, res) => {
-//   //request handler function
-//   res.send("Hello from the server!");
-// });
-
-app.use("/test", (req, res) => {
-  res.send("This is a test response");
+app.get("/user/:userId", (req, res) => {
+  console.log(req.params);
+  res.send({
+    userId: req.params.userId,
+    firstName: "Shiva",
+    lastName: "Mahajan",
+  });
 });
 
-app.use("/hello", (req, res) => {
+app.get("/user", (req, res) => {
+  console.log(req.query);
+  res.send({
+    firstName: "Shiva",
+    lastName: "Mahajan",
+  });
+});
+
+app.post("/user", (req, res) => {
+  res.send("User created successfully");
+});
+
+app.delete("/user", (req, res) => {
+  res.send("Deleted successfully!");
+});
+
+app.use("/test", (req, res) => {
   res.send("Hello from the server");
 });
 
