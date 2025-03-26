@@ -1,23 +1,19 @@
 const express = require("express");
 const app = express();
-const { adminAuth, userAuth } = require("../middlewares/auth");
-// Middlewares why do we need it
 
-app.use("/admin", adminAuth);
-
-app.get("/user/login", (req, res) => {
-  res.send("user data sent!");
+app.get("/getAllData", (req, res) => {
+  try {
+    //Logic of fetching data from db
+    throw new Error("asdf");
+    res.send("All data sent");
+  } catch (error) {
+    res.status(500).send("Something error occured in db");
+  }
 });
 
-app.get("/user/data", userAuth, (req, res) => {
-  res.send("user data sent!");
-});
-app.get("/admin/getAllData", (req, res) => {
-  res.send("All data sent!");
-});
-
-app.get("/admin/deleteUser", (req, res) => {
-  res.send("Deleted user!");
+//error handling middleware -- act as wildcard route
+app.use("/", (err, req, res, next) => {
+  res.status(500).send("Something went wrong");
 });
 
 app.listen(7777, () => {
