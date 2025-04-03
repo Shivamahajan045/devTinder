@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 const userSchema = new mongoose.Schema(
   {
     firstName: {
@@ -16,10 +17,20 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowerCase: true,
       trim: true,
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error("Email id is not valid");
+        }
+      },
     },
     password: {
       type: String,
       required: true,
+      validate(value) {
+        if (!validator.isStrongPassword(value)) {
+          throw new Error("Enter a strong password");
+        }
+      },
     },
     age: {
       type: Number,
@@ -41,6 +52,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       default:
         "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
+      validate(value) {
+        if (!validator.isURL(value)) {
+          throw new Error("Enter a valid photoUrl");
+        }
+      },
     },
     about: {
       type: String,
